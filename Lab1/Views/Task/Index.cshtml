@@ -1,0 +1,74 @@
+﻿@model Lab1.Models.SortingViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<form asp-action="Index" method="get">
+
+    <label class="control-label">Сортировка: </label><br />
+    @Html.DropDownList("sortOrder", Model.SortOrder as SelectList,
+    htmlAttributes: new { @class = "form-control" })<br />
+
+    <input type="submit" value="Фильтр" class="btn btn-dark" />
+
+</form>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                Задание
+            </th>
+            <th>
+                Статус
+            </th>
+            <th>
+                Документ
+            </th>
+            <th>
+                Дата завершения
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Tasks)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImageName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.Id })
+            </td>
+
+          
+            <td>
+                <form asp-action="Delete">
+                    <input type="hidden" asp-for="Id" value="@item.Id"/>
+                    <input type="submit" value="Delete" class="btn btn-danger" />
+                </form>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
